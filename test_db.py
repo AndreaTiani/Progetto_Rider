@@ -10,14 +10,18 @@ try:
     )
     cursor = connection.cursor()
 
-    cursor.execute("SELECT version();")
+    query_test = "INSERT INTO public.riders (id, name, vehicle, total_deliveries) VALUES (1, 'John Doe', 'Motorcycle', 10) RETURNING id;"
+    cursor.execute(query_test)
 
-    record = cursor.fetchone()
+    # 2. Recuperiamo l'ID appena inserito (grazie a RETURNING id)
+    id_inserito = cursor.fetchone()[0]
+    print(f"Rider inserito con successo! ID generato: {id_inserito}")
 
-    print("Ti sei connesso a - ", record, "\n")
+    # 3. FONDAMENTALE: Conferma e salva l'inserimento nel database reale
+    connection.commit()
 
 except (Exception, psycopg2.Error) as error:
-    print("Errore non ti sei conesso a PostgreSQL", error)
+    print("Errore non ti sei connesso a PostgreSQL", error)
 
 finally:
     if 'connection' in locals() and connection:
