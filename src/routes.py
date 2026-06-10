@@ -126,7 +126,35 @@ def reviews_update():
     '''
     try:
         # Esegui la query usando la nuova funzione query_db strutturata
+        # 
+        data = request.get_json()
+
+        if not data:
+            raise ValueError("Body della richiesta mancante o non valido")
+
+        # Estraggo i parametri necessari dal JSON
+        review_id = data.get("id")
+        rider_id = data.get("rider_id")
+        customer_name = data.get("customer_name")
+        rating = data.get("rating")
+        comment = data.get("comment")   
+
+        # Controllo campi parametri
+        if not review_id:
+            raise ValueError("Campo 'id' obbligatorio")
+        if not rider_id:
+            raise ValueError("Campo 'rider_id' obbligatorio")
+        if not customer_name:
+            raise ValueError("Campo 'customer_name' obbligatorio")
+        if not rating:
+            raise ValueError("Campo 'rating' obbligatorio")
         
+        # Costruzione della query di UPDATE
+        query = f"UPDATE reviews SET rider_id = {rider_id}, customer_name = '{customer_name}', rating = {rating}, comment = '{comment}' WHERE id = {review_id}"
+
+
+        # Passa alla funzione che apre la connessione al db e esegue la query
+        reviews_h.modifica_recensione(query)
 
         return jsonify({"Message": "Success"}), 200
 
