@@ -152,7 +152,7 @@ def reviews_update():
         return jsonify({"Error": "Errore imprevisto, " + str(e)}), 500
 
 
-@riders_bp.route("/riders_delete", methods=["DELETE"])
+@riders_bp.route("/riders_delete<string:rider_id>", methods=["DELETE"])
 def riders_delete():
     '''
     Cancella un rider e tutte le recensioni a lui collegate, inserire id da URL???
@@ -161,6 +161,11 @@ def riders_delete():
     try:
         # Esegui la query usando la nuova funzione query_db strutturata
         
+        rider_id = request.args.get("rider_id")
+
+        riders_h.rimuovi_rider(f"DELETE FROM reviews WHERE rider_id = {rider_id};")
+        riders_h.rimuovi_rider(f"DELETE FROM riders WHERE id = {rider_id};")
+
 
         return jsonify({"Message": "Success"}), 200
 
