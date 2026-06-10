@@ -7,6 +7,7 @@ def db_insert(query_inserita):
     """
     Esegue una query inserita come parametro sul db.
     Solleva un'eccezione specifica a seconda del tipo di fallimento.
+    Non ha valori di ritorno
     """
 
     connection = None
