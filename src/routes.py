@@ -11,6 +11,27 @@ riders_bp = Blueprint("riders", __name__, url_prefix="/riders")
 #       total_deliveries che parte da 0
 #       comment è facoltativo
 
+@riders_bp.route("/create_tables", methods=["POST"])
+def create_tables():
+    '''
+    Inizializza le tabelle del db e le popola con i valori di default
+    '''
+    try:
+        # Esegui la query usando la nuova funzione query_db strutturata
+        
+
+        return jsonify({"Message": "Success"}), 200
+
+    except RuntimeError as e:
+        return jsonify({"Error": "Database non raggiungibile, " + str(e)}), 500
+
+    except ValueError as e:
+        return jsonify({"Error": "Impossibile eseguire la query, " + str(e)}), 400
+
+    except Exception as e:
+        return jsonify({"Error": "Errore imprevisto, " + str(e)}), 500
+
+
 @riders_bp.route("/test_db", methods=["POST"])
 def test_db():
     '''
