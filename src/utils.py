@@ -48,13 +48,6 @@ def db_insert(query_inserita):
             connection.close()
             print("PostgreSQL connessione chiusa")
 
-
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> fdc29fc1b92c35cde9c89b20474215dc0a3679f0
 def db_select(query_inserita):
 
     connection = None

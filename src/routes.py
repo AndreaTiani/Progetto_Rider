@@ -97,11 +97,24 @@ def riders_list():
 
 @riders_bp.route("/reviews_add", methods=["POST"])
 def reviews_add():
-    '''
-    Inserisci una recensione, passaggio di parametri tramite BODY e JSON???
-    Query con INSERT
-    '''
     try:
+        data = request.get_json()
+
+        rider_id      = data["rider_id"]
+        customer_name = data["customer_name"]
+        rating        = data["rating"]
+        comment       = data.get("comment", None)
+
+        if not rider_id or not customer_name:
+            raise ValueError("rider_id e customer_name sono obbligatori")
+        if not (1 <= int(rating) <= 5):
+            raise ValueError("rating deve essere tra 1 e 5")
+
+        reviews_h.aggiungi_recensioni(f"INSERT INTO publi.reviews (rider_id, customer_name, rating, comment) VALUES ({rider_id}, {customer_name}, {rating}, {comment});")
+        '''
+        Inserisci una recensione, passaggio di parametri tramite BODY e JSON???
+        Query con INSERT
+        '''
         # Esegui la query usando la nuova funzione query_db strutturata
         
 
