@@ -18,7 +18,8 @@ def create_tables():
     '''
     try:
         # Esegui la query usando la nuova funzione query_db strutturata
-        
+        riders_h.aggiungi_rider("CREATE TABLE IF NOT EXISTS riders (id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, name VARCHAR(100) NOT NULL, vehicle VARCHAR(50) NOT NULL, total_deliveries INT NOT NULL DEFAULT 0);")
+        riders_h.aggiungi_rider("CREATE TABLE IF NOT EXISTS reviews (id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, rider_id INT NOT NULL, customer_name VARCHAR(100) NOT NULL, rating INT NOT NULL, comment VARCHAR(500) DEFAULT NULL, FOREIGN KEY (rider_id) REFERENCES riders(id), CHECK (rating BETWEEN 1 AND 5));")
 
         return jsonify({"Message": "Success"}), 200
 
