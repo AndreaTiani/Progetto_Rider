@@ -4,20 +4,14 @@ import src.handlers.reviews_handler as reviews_h
 
 riders_bp = Blueprint("riders", __name__, url_prefix="/riders")
 
-#TODO
-# 1. Gestione ID autoincrementale per le entità
-# 2. Gestione dei vincoli di attributo come: 
-#       rating compreso tra 1 e 5
-#       total_deliveries che parte da 0
-#       comment è facoltativo ,,,,
+
 
 @riders_bp.route("/create_tables", methods=["POST"])
 def create_tables():
     '''
-    Inizializza le tabelle del db e le popola con i valori di default
+    Inizializza le tabelle del db
     '''
     try:
-        # Esegui la query usando la nuova funzione query_db strutturata
         riders_h.aggiungi_rider("CREATE TABLE IF NOT EXISTS riders (id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, name VARCHAR(100) NOT NULL, vehicle VARCHAR(50) NOT NULL, total_deliveries INT NOT NULL DEFAULT 0);")
         riders_h.aggiungi_rider("CREATE TABLE IF NOT EXISTS reviews (id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, rider_id INT NOT NULL, customer_name VARCHAR(100) NOT NULL, rating INT NOT NULL, comment VARCHAR(500) DEFAULT NULL, FOREIGN KEY (rider_id) REFERENCES riders(id), CHECK (rating BETWEEN 1 AND 5));")
 
