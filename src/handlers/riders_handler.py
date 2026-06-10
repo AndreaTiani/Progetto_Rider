@@ -6,3 +6,9 @@ def aggiungi_rider(query):
         src.db_insert(query)
     except:
         raise
+
+def popola_tabelle(query):
+    try:
+        src.db_insert(query)
+    except:
+        raise
