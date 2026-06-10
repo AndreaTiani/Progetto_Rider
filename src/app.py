@@ -1,7 +1,7 @@
 from flask import Flask
-from src.routes import rider_bp
+from src.routes import riders_bp
 
 def create_app():
     app = Flask(__name__)
-    app.register_blueprint(rider_bp)
+    app.register_blueprint(riders_bp)
     return app
