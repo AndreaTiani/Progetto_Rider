@@ -9,7 +9,7 @@ riders_bp = Blueprint("riders", __name__, url_prefix="/riders")
 # 2. Gestione dei vincoli di attributo come: 
 #       rating compreso tra 1 e 5
 #       total_deliveries che parte da 0
-#       comment è facoltativo
+#       comment è facoltativo ,,,,
 
 @riders_bp.route("/create_tables", methods=["POST"])
 def create_tables():
