@@ -56,15 +56,34 @@ def test_db():
 @riders_bp.route("/riders_list", methods=["GET"])
 def riders_list():
     '''
-    Elenca tutti i corriere filtrati eventualemente per veicolo, inserire ordinamento da URL???
+    Elenca tutti i corrieri filtrali eventualemente per veicolo, inserire ordinamento da URL???
     Query con SELECT
     Parametro opzionale della funzione "ordina_per"
     '''
     try:
         # Esegui la query usando la nuova funzione query_db strutturata
-        
 
-        return jsonify({"Message": "Success"}), 200
+        vehicle = request.args.get("vehicle")
+
+
+        """
+        Valida il parametro di ordinamento
+        colonne_valide = ["id", "name", "vehicle", "total_deliveries"]
+        """
+
+
+
+        # Costruisce la query SELECT con filtro opzionale per veicolo
+        query = "SELECT * FROM riders"
+        if vehicle:
+            query += f" WHERE vehicle = '{vehicle}'"
+
+
+        # Passa alla funzione che aprle la connessione al db e esegue la query
+
+        risultato = riders_h.elenca_riders(query)
+
+        return jsonify({"Message": "Success", "data": risultato}), 200
 
     except RuntimeError as e:
         return jsonify({"Error": "Database non raggiungibile, " + str(e)}), 500
@@ -85,6 +104,7 @@ def reviews_add():
     try:
         # Esegui la query usando la nuova funzione query_db strutturata
         
+
 
         return jsonify({"Message": "Success"}), 200
 

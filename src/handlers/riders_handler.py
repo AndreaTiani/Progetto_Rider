@@ -6,3 +6,8 @@ def aggiungi_rider(query):
         src.db_insert(query)
     except:
         raise
+
+
+
+def elenca_riders(query):
+    return src.db_select(query)
