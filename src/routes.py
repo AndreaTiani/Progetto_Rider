@@ -9,7 +9,7 @@ riders_bp = Blueprint("riders", __name__, url_prefix="/riders")
 # 2. Gestione dei vincoli di attributo come: 
 #       rating compreso tra 1 e 5
 #       total_deliveries che parte da 0
-#       comment è facoltativo ,,,,
+#       comment è facoltativo
 
 @riders_bp.route("/create_tables", methods=["POST"])
 def create_tables():
@@ -35,8 +35,8 @@ def create_tables():
 @riders_bp.route("/fill_tables", methods=["POST"])
 def fill_tables():
     try:
-        riders_h.popola_tabelle("INSERT INTO public.riders (name, vehicle, total_deliveries) VALUES ('Marco Rossi', 'bicycle', 42), ('Giulia Bianchi', 'motorcycle', 128),('Luca Ferrari', 'scooter', 77);")
-        reviews_h.popola_tabelle("INSERT INTO public.reviews (rider_id, customer_name, rating, comment) VALUES (1, 'Anna Verdi', 5, 'Consegna rapidissima, ottimo!'),(2, 'Paolo Neri', 4, 'Puntuale e cortese.'),(1, 'Sofia Russo', 3, NULL),(3, 'Marco Esposito', 5, 'Perfetto, lo consiglio.'),(2, 'Chiara Conti', 2, 'Un po'' di ritardo.');")
+        riders_h.popola_tabelle("INSERT INTO riders (name, vehicle, total_deliveries) VALUES ('Marco Rossi', 'bicycle', 42), ('Giulia Bianchi', 'motorcycle', 128),('Luca Ferrari', 'scooter', 77);")
+        reviews_h.popola_tabelle("INSERT INTO reviews (rider_id, customer_name, rating, comment) VALUES (1, 'Anna Verdi', 5, 'Consegna rapidissima, ottimo!'),(2, 'Paolo Neri', 4, 'Puntuale e cortese.'),(1, 'Sofia Russo', 3, NULL),(3, 'Marco Esposito', 5, 'Perfetto, lo consiglio.'),(2, 'Chiara Conti', 2, 'Un po'' di ritardo.');")
         return jsonify({"Message": "Success"}), 200
 
     except RuntimeError as e:
@@ -56,7 +56,7 @@ def test_db():
     '''
     try:
         # Esegui la query usando la nuova funzione query_db strutturata
-        riders_h.aggiungi_rider("INSERT INTO public.riders (id, name, vehicle, total_deliveries) VALUES (5, 'John Doe', 'Motorcycle', 10)")
+        riders_h.aggiungi_rider("INSERT INTO riders (id, name, vehicle, total_deliveries) VALUES (5, 'John Doe', 'Motorcycle', 10)")
         return jsonify({"Message": "Success, Rider inserito correttamente"}), 200
 
     except RuntimeError as e:
@@ -123,10 +123,10 @@ def reviews_add():
 
         if not rider_id or not customer_name:
             raise ValueError("rider_id e customer_name sono obbligatori")
-        if not (1 <= int(rating) <= 5):
-            raise ValueError("rating deve essere tra 1 e 5")
+        # if not (1 <= int(rating) <= 5):
+        #     raise ValueError("rating deve essere tra 1 e 5")
 
-        reviews_h.aggiungi_recensioni(f"INSERT INTO public.reviews (rider_id, customer_name, rating, comment) VALUES ({rider_id}, '{customer_name}', {rating}, '{comment}')")
+        reviews_h.aggiungi_recensioni(f"INSERT INTO reviews (rider_id, customer_name, rating, comment) VALUES ({rider_id}, '{customer_name}', {rating}, '{comment}')")
         '''
         Inserisci una recensione, passaggio di parametri tramite BODY e JSON???
         Query con INSERT
@@ -165,7 +165,7 @@ def reviews_update():
         review_id = data.get("id")
         rider_id = data.get("rider_id")
         customer_name = data.get("customer_name")
-        rating = data.get("rating")
+        rating = int(data.get("rating"))
         comment = data.get("comment")   
 
         # Controllo campi parametri

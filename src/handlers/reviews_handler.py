@@ -12,3 +12,9 @@ def popola_tabelle(query):
         src.db_insert(query)
     except:
         raise
+    
+def modifica_recensione(query):
+    try:
+        src.db_insert(query)
+    except:
+        raise
