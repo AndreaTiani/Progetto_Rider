@@ -1,35 +1,25 @@
 import src.utils as src
 import os
 
+# Scrittura
+def crea_tabella(query):
+    src.db_insert(query)
+
 def aggiungi_rider(query):
-    try:
-        src.db_insert(query)
-    except:
-        raise
+    src.db_insert(query)
 
 def popola_tabelle(query):
-    try:
-        src.db_insert(query)
-    except:
-        raise
-
-def elenca_riders(query):
-    try:
-        return src.db_select(query)
-    except:
-        raise
-    
+    src.db_insert(query)
 
 def rimuovi_rider(query):
-    try:
-        src.db_insert(query)
-    except:
-        raise
+    src.db_insert(query)
+
+def droppa_tabella(query):
+    src.db_insert(query)
+
+# Lettura
+def elenca_riders(query):
+    return src.db_select(query)
 
 def media_rider(query):
-    try:
-        return src.db_select(query)
-    except:
-        raise
-    
-  
+    return src.db_select(query)
