@@ -208,8 +208,11 @@ def riders_delete(rider_id):
         return jsonify({"Error": "Errore imprevisto, " + str(e)}), 500
 
 
-@riders_bp.route("/riders_avg", methods=["GET"])
-def riders_avg():
+@riders_bp.route("/riders_avg/<string:rider_id>", methods=["GET"])
+def riders_avg(rider_id):
+
+    risultato = riders_h.media_rider(f"SELECT rider_id, AVG(rating) FROM reviews GROUP BY rider_id HAVING rider_id = {rider_id}")
+
     '''
     Fornisce la media dei voti di un rider, inserire i dati da URL???
     Query con SELECT
@@ -218,7 +221,7 @@ def riders_avg():
         # Esegui la query usando la nuova funzione query_db strutturata
         
 
-        return jsonify({"Message": "Success"}), 200
+        return jsonify({"Message": "Success", "Data": risultato}), 200
 
     except RuntimeError as e:
         return jsonify({"Error": "Database non raggiungibile, " + str(e)}), 500

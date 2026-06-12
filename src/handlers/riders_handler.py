@@ -25,3 +25,11 @@ def rimuovi_rider(query):
         src.db_insert(query)
     except:
         raise
+
+def media_rider(query):
+    try:
+        return src.db_select(query)
+    except:
+        raise
+    
+  
