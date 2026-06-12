@@ -32,6 +32,22 @@ def create_tables():
     except Exception as e:
         return jsonify({"Error": "Errore imprevisto, " + str(e)}), 500
 
+@riders_bp.route("/fill_tables", methods=["POST"])
+def fill_tables():
+    try:
+        riders_h.popola_tabelle("INSERT INTO public.riders (name, vehicle, total_deliveries) VALUES ('Marco Rossi', 'bicycle', 42), ('Giulia Bianchi', 'motorcycle', 128),('Luca Ferrari', 'scooter', 77);")
+        reviews_h.popola_tabelle("INSERT INTO public.reviews (rider_id, customer_name, rating, comment) VALUES (1, 'Anna Verdi', 5, 'Consegna rapidissima, ottimo!'),(2, 'Paolo Neri', 4, 'Puntuale e cortese.'),(1, 'Sofia Russo', 3, NULL),(3, 'Marco Esposito', 5, 'Perfetto, lo consiglio.'),(2, 'Chiara Conti', 2, 'Un po'' di ritardo.');")
+        return jsonify({"Message": "Success"}), 200
+
+    except RuntimeError as e:
+        return jsonify({"Error": "Database non raggiungibile, " + str(e)}), 500
+
+    except ValueError as e:
+        return jsonify({"Error": "Impossibile eseguire la query, " + str(e)}), 400
+
+    except Exception as e:
+        return jsonify({"Error": "Errore imprevisto, " + str(e)}), 500
+
 
 @riders_bp.route("/test_db", methods=["POST"])
 def test_db():

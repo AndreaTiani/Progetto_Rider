@@ -6,3 +6,9 @@ def aggiungi_recensioni(query):
         src.db_insert(query)
     except:
         raise
+
+def popola_tabelle(query):
+    try:
+        src.db_insert(query)
+    except:
+        raise
