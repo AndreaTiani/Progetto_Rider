@@ -10,7 +10,7 @@ try:
     )
     cursor = connection.cursor()
 
-    query_test = "INSERT INTO public.riders (id, name, vehicle, total_deliveries) VALUES (2, 'John Doe', 'Motorcycle', 10) RETURNING id;"
+    query_test = "INSERT INTO public.riders (id, name, vehicle, total_deliveries) VALUES (3, 'John Doe', 'Motorcycle', 10) RETURNING id;"
     cursor.execute(query_test)
 
     # 2. Recuperiamo l'ID appena inserito (grazie a RETURNING id)

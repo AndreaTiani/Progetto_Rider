@@ -1,0 +1,19 @@
+services:
+  # Servizio del Database PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: rider_postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgress  # Nome del database configurato con le due 's'
+    ports:
+      - "5432:5432"
+    volumes:
+      # Inizializza il database eseguendo il file SQL al primo avvio
+      - ./data/progetto_rider.sql:/docker-entrypoint-initdb.d/progetto_rider.sql
+      - postgres_data:/var/lib/postgresql/data
+
+# FONDAMENTALE: Questa sezione dichiara il volume globale a Docker, risolvendo l'errore!
+volumes:
+  postgres_data:
