@@ -1,8 +1,8 @@
-import src.utils
+import src.utils as src
 import os
 
 def aggiungi_recensioni(query):
     try:
-        return src.db_select(query)
+        src.db_insert(query)
     except:
         raise
